@@ -34,6 +34,7 @@
   },
   "scripts": {
     "build": "webpack --mode=production --config webpack.config.build.js",
+    "prepare": "npm run build",
     "build:dev": "webpack --mode=development --config webpack.config.build.js",
     "test": "jest",
     "start": "webpack serve --open --config webpack.config.dev-server.js"
