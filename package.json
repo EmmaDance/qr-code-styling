@@ -1,6 +1,6 @@
 {
   "name": "qr-code-styling",
-  "version": "1.6.0-rc.1",
+  "version": "1.6.1",
   "description": "Add a style and an image to your QR code",
   "main": "lib/qr-code-styling.js",
   "types": "lib/index.d.ts",
@@ -41,7 +41,7 @@
   },
   "repository": {
     "type": "git",
-    "url": "git+https://github.com/kozakdenys/qr-code-styling.git"
+    "url": "git+https://github.com/EmmaDance/qr-code-styling.git"
   },
   "keywords": [
     "qr",

@@ -1,5 +1,4 @@
 import calculateImageSize from "../tools/calculateImageSize";
-import toDataUrl from "../tools/toDataUrl";
 import errorCorrectionPercents from "../constants/errorCorrectionPercents";
 import QRDot from "../figures/dot/QRDot";
 import QRCornerSquare from "../figures/cornerSquare/QRCornerSquare";
@@ -449,18 +448,46 @@ export default class QRSVG {
     const dy = yBeginning + options.imageOptions.margin + (count * dotSize - height) / 2;
     const dw = width - options.imageOptions.margin * 2;
     const dh = height - options.imageOptions.margin * 2;
-
     const image = document.createElementNS("http://www.w3.org/2000/svg", "image");
+
+    const base64Image = await this._getBase64Image(options.image || "");
+
+    image.setAttribute("href", base64Image);
     image.setAttribute("x", String(dx));
     image.setAttribute("y", String(dy));
     image.setAttribute("width", `${dw}px`);
     image.setAttribute("height", `${dh}px`);
 
-    const imageUrl = await toDataUrl(options.image || "");
-
-    image.setAttribute("href", imageUrl || "");
-
     this._element.appendChild(image);
+  }
+
+  async _getImageBlob(url: string): Promise<Blob> {
+    const resp = await fetch(url);
+    return resp.blob();
+  }
+
+  // convert a blob to base64
+  _blobToBase64(blob: Blob): Promise<string> {
+    return new Promise((resolve) => {
+      const reader = new FileReader();
+      reader.onload = function () {
+        const dataUrl = reader.result;
+        resolve(dataUrl as string);
+      };
+      reader.readAsDataURL(blob);
+    });
+  }
+
+  async _getBase64Image(url: string): Promise<string> {
+    if (url === "") {
+      return new Promise((resolve) => {
+        resolve("");
+      });
+    }
+
+    const blob = await this._getImageBlob(url);
+    const base64 = await this._blobToBase64(blob);
+    return base64;
   }
 
   _createColor({
