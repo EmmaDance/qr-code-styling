@@ -453,12 +453,15 @@ export default class QRSVG {
     const image = document.createElementNS("http://www.w3.org/2000/svg", "image");
     image.setAttribute("x", String(dx));
     image.setAttribute("y", String(dy));
+    this._element.setAttribute("xmlns:xlink", "http://www.w3.org/1999/xlink");
     image.setAttribute("width", `${dw}px`);
     image.setAttribute("height", `${dh}px`);
 
     const imageUrl = await toDataUrl(options.image || "");
+    console.log(imageUrl);
 
     image.setAttribute("href", imageUrl || "");
+    image.setAttribute("xlink:href", imageUrl || "");
 
     this._element.appendChild(image);
   }
