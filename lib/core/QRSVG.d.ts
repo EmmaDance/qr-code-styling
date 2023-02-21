@@ -25,6 +25,9 @@ export default class QRSVG {
         count: number;
         dotSize: number;
     }): Promise<void>;
+    _getImageBlob(url: string): Promise<Blob>;
+    _blobToBase64(blob: Blob): Promise<string>;
+    _getBase64Image(url: string): Promise<string>;
     _createColor({ options, color, additionalRotation, x, y, height, width, name }: {
         options?: Gradient;
         color?: string;
